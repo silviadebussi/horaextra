@@ -1,6 +1,10 @@
 from django import forms
 from .models import RegistroHora
 
+
+from django import forms
+from .models import RegistroHora, Regional
+
 class RegistroHoraForm(forms.ModelForm):
     class Meta:
         model = RegistroHora
@@ -11,3 +15,6 @@ class RegistroHoraForm(forms.ModelForm):
             'hora_fim': forms.TimeInput(attrs={'type': 'time'}),
             'descricao': forms.Textarea(attrs={'rows': 3}),
         }
+
+    regional = forms.ModelChoiceField(queryset=Regional.objects.all(), empty_label="Escolha a região")
+

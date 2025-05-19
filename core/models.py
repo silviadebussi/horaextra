@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime
 
 class Cliente(models.Model):
     nome = models.CharField(max_length=255)
@@ -9,15 +9,13 @@ class Cliente(models.Model):
     def __str__(self):
         return f"{self.nome} ({self.cnpj})"
 
-class Regional (models.Model):
-    nome = models.CharField(max_length=255)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+class Regional(models.Model):
+    nome = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nome
 
 class RegistroHora(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     regional = models.ForeignKey(Regional, on_delete=models.CASCADE)
     data = models.DateField()
     hora_inicio = models.TimeField()
@@ -25,7 +23,8 @@ class RegistroHora(models.Model):
     descricao = models.TextField()
 
     def __str__(self):
-        return f"{self.usuario} - {self.regional} - {self.data}"
+        return f'{self.regional} - {self.data}'
+
 
     def total_horas(self):
         delta = datetime.combine(self.data, self.hora_fim) - datetime.combine(self.data, self.hora_inicio)
