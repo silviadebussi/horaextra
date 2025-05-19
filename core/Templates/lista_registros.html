@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'horas/base.html' %}
 
-</body>
-</html>
+{% block content %}
+<h2>Meus Registros</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Regional</th>
+            <th>Hora Início</th>
+            <th>Hora Fim</th>
+            <th>Duração (h)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in registros %}
+        <tr>
+            <td>{{ r.data }}</td>
+            <td>{{ r.regional }}</td>
+            <td>{{ r.hora_inicio }}</td>
+            <td>{{ r.hora_fim }}</td>
+            <td>{{ r.total_horas|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Nenhum registro encontrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
