@@ -29,3 +29,11 @@ class RegistroHora(models.Model):
     def total_horas(self):
         delta = datetime.combine(self.data, self.hora_fim) - datetime.combine(self.data, self.hora_inicio)
         return delta.total_seconds() / 3600
+
+class Gestão(models.Model):
+    regional = models.ForeignKey(Regional, on_delete=models.CASCADE)
+    email = models.CharField(max_length=100)
+    nome = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.regional} - {self.email} - {self.nome}'
