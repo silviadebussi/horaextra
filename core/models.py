@@ -37,3 +37,11 @@ class Gestão(models.Model):
 
     def __str__(self):
         return f'{self.regional} - {self.email} - {self.nome}'
+
+class fiscais(models.Model):
+    regional = models.ForeignKey(Regional, on_delete= models.CASCADE)
+    email = models.CharFields(max_length = 100)
+    nome = models.CharField(max_length= 100)
+    
+    def __str__(self):
+        return f'{self.regional} - {self.email} - {self.nome}'
