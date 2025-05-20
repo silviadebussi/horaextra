@@ -25,4 +25,5 @@ urlpatterns = [
     path('atividades/nova/', views.criar_atividade, name='criar_atividade'),
     path('horas/', views.registrar_horas, name='registrar_horas'),
 
+
 ]

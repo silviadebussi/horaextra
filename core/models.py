@@ -86,4 +86,4 @@ class Atividade(models.Model):
 @receiver(post_save, sender=User)
 def criar_perfil_usuario(sender, instance, created, **kwargs):
     if created:
-        Perfil.objects.create(usuario=instance)
+        Perfil.objects.create(user=instance)
