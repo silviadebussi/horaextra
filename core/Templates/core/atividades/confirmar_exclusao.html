@@ -1,7 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Exclusão{% endblock %}
+
+{% block content %}
 <h2>Excluir Atividade</h2>
-<p>Tem certeza que deseja excluir: {{ atividade }}?</p>
+<p>Tem certeza que deseja excluir <strong>{{ atividade.descricao }}</strong>?</p>
 <form method="post">
   {% csrf_token %}
-  <button type="submit">Confirmar</button>
-  <a href="{% url 'listar_atividades' %}">Cancelar</a>
+  <button type="submit" class="btn btn-danger">Confirmar</button>
+  <a href="{% url 'listar_atividades' %}" class="btn btn-secondary">Cancelar</a>
 </form>
+{% endblock %}

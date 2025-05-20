@@ -111,3 +111,5 @@ def excluir_atividade(request, pk):
         atividade.delete()
         return redirect('listar_atividades')
     return render(request, 'core/atividades/confirmar_exclusao.html', {'atividade': atividade})
+
+

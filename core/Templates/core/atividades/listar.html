@@ -1,16 +1,40 @@
-<h2>Minhas Atividades</h2>
-<a href="{% url 'criar_atividade' %}">+ Nova Atividade</a>
-<ul>
-  {% for atividade in atividades %}
-    <li>
-      {{ atividade.descricao }} - {{ atividade.data }} - {{ atividade.total_horas|floatformat:2 }} horas
-      {% if atividade.ocupada %}
-        - <strong>Ocupada</strong> por {{ atividade.funcionario.username }}
-      {% else %}
-        - <em>Disponível</em>
-      {% endif %}
-      <a href="{% url 'editar_atividade' atividade.id %}">Editar</a>
-      <a href="{% url 'excluir_atividade' atividade.id %}">Excluir</a>
-    </li>
-  {% endfor %}
-</ul>
+{% extends 'base.html' %}
+
+{% block title %}Minhas Atividades{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Minhas Atividades</h2>
+<a href="{% url 'criar_atividade' %}" class="btn btn-primary mb-3">+ Nova Atividade</a>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Descrição</th>
+      <th>Data</th>
+      <th>Horas</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for atividade in atividades %}
+    <tr>
+      <td>{{ atividade.descricao }}</td>
+      <td>{{ atividade.data }}</td>
+      <td>{{ atividade.total_horas|floatformat:2 }}</td>
+      <td>
+        {% if atividade.ocupada %}
+          <span class="badge bg-danger">Ocupada por {{ atividade.funcionario.username }}</span>
+        {% else %}
+          <span class="badge bg-success">Disponível</span>
+        {% endif %}
+      </td>
+      <td>
+        <a href="{% url 'editar_atividade' atividade.id %}" class="btn btn-sm btn-warning">Editar</a>
+        <a href="{% url 'excluir_atividade' atividade.id %}" class="btn btn-sm btn-danger">Excluir</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
