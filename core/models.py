@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Cliente(models.Model):
     nome = models.CharField(max_length=255)
@@ -75,3 +77,13 @@ class AtividadeHoraExtra(models.Model):
     def total_horas(self):
         delta = datetime.combine(self.data, self.hora_fim) - datetime.combine(self.data, self.hora_inicio)
         return delta.total_seconds() / 3600
+
+class Atividade(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+    disponivel = models.BooleanField(default=True)
+
+@receiver(post_save, sender=User)
+def criar_perfil_usuario(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(usuario=instance)

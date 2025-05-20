@@ -20,5 +20,9 @@ urlpatterns = [
     path('atividades/nova/', views.criar_atividade, name='criar_atividade'),
     path('atividades/editar/<int:pk>/', views.editar_atividade, name='editar_atividade'),
     path('atividades/excluir/<int:pk>/', views.excluir_atividade, name='excluir_atividade'),
+    path('', views.dashboard, name='dashboard'),
+    path('atividades/', views.listar_atividades, name='lista_atividades'),
+    path('atividades/nova/', views.criar_atividade, name='criar_atividade'),
+    path('horas/', views.registrar_horas, name='registrar_horas'),
 
 ]

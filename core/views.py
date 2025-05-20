@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from .models import  Cliente, User, Regional, RegistroHora, AtividadeHoraExtra
+from .models import Cliente, User, Regional, RegistroHora, AtividadeHoraExtra, Perfil, Atividade
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.views import View
@@ -17,7 +17,13 @@ class IndexView(TemplateView):
     template_name = 'inicio.html'
 
 
-
+@login_required
+def dashboard(request):
+    perfil = Perfil.objects.get(usuario=request.user)
+    if perfil.tipo == 'gestor':
+        return redirect('lista_atividades')
+    else:
+        return redirect('registrar_horas')
 
 @login_required
 def lista_registros(request):
@@ -113,3 +119,19 @@ def excluir_atividade(request, pk):
     return render(request, 'core/atividades/confirmar_exclusao.html', {'atividade': atividade})
 
 
+@login_required
+def registrar_horas(request):
+    perfil = Perfil.objects.get(usuario=request.user)
+    if perfil.tipo != 'funcionario':
+        return redirect('lista_atividades')
+    if request.method == 'POST':
+        form = RegistroHoraForm(request.POST)
+        if form.is_valid():
+            registro = form.save(commit=False)
+            registro.funcionario = request.user
+            registro.save()
+            return redirect('registrar_horas')
+    else:
+        form = RegistroHoraForm()
+        form.fields['atividade'].queryset = Atividade.objects.filter(disponivel=True)
+    return render(request, 'horas/form.html', {'form': form})
