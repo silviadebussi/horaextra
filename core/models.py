@@ -45,3 +45,33 @@ class fiscais(models.Model):
 
     def __str__(self):
         return f'{self.regional} - {self.email} - {self.nome}'
+
+class Perfil(models.Model):
+    TIPOS_USUARIO = [
+        ('funcionario', 'Funcionário'),
+        ('gestor', 'Gestor'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    tipo = models.CharField(max_length=20, choices=TIPOS_USUARIO)
+    regional = models.ForeignKey('Regional', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.tipo}'
+
+class AtividadeHoraExtra(models.Model):
+    gestor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='atividades_criadas')
+    regional = models.ForeignKey(Regional, on_delete=models.CASCADE)
+    descricao = models.TextField()
+    data = models.DateField()
+    hora_inicio = models.TimeField()
+    hora_fim = models.TimeField()
+    ocupada = models.BooleanField(default=False)
+    funcionario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='atividades_assumidas')
+
+    def __str__(self):
+        return f"{self.descricao} - {self.data} ({'Ocupada' if self.ocupada else 'Disponível'})"
+
+    def total_horas(self):
+        delta = datetime.combine(self.data, self.hora_fim) - datetime.combine(self.data, self.hora_inicio)
+        return delta.total_seconds() / 3600

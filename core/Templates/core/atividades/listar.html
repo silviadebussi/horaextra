@@ -1,0 +1,16 @@
+<h2>Minhas Atividades</h2>
+<a href="{% url 'criar_atividade' %}">+ Nova Atividade</a>
+<ul>
+  {% for atividade in atividades %}
+    <li>
+      {{ atividade.descricao }} - {{ atividade.data }} - {{ atividade.total_horas|floatformat:2 }} horas
+      {% if atividade.ocupada %}
+        - <strong>Ocupada</strong> por {{ atividade.funcionario.username }}
+      {% else %}
+        - <em>Disponível</em>
+      {% endif %}
+      <a href="{% url 'editar_atividade' atividade.id %}">Editar</a>
+      <a href="{% url 'excluir_atividade' atividade.id %}">Excluir</a>
+    </li>
+  {% endfor %}
+</ul>

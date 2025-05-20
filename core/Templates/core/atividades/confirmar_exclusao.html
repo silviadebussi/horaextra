@@ -1,0 +1,7 @@
+<h2>Excluir Atividade</h2>
+<p>Tem certeza que deseja excluir: {{ atividade }}?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Confirmar</button>
+  <a href="{% url 'listar_atividades' %}">Cancelar</a>
+</form>
