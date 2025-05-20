@@ -135,3 +135,8 @@ def registrar_horas(request):
         form = RegistroHoraForm()
         form.fields['atividade'].queryset = Atividade.objects.filter(disponivel=True)
     return render(request, 'horas/form.html', {'form': form})
+
+
+@login_required
+def painel(request):
+    return render(request, 'inicio.html')
