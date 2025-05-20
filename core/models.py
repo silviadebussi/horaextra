@@ -22,7 +22,6 @@ class RegistroHora(models.Model):
     data = models.DateField()
     hora_inicio = models.TimeField()
     hora_fim = models.TimeField()
-    descricao = models.TextField()
 
     def __str__(self):
         return f'{self.regional} - {self.data}'
