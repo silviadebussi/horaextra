@@ -11,6 +11,7 @@ from .models import AtividadeHoraExtra
 from .forms import AtividadeHoraExtraForm
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+from django.contrib.auth.views import LoginView
 
 
 class IndexView(TemplateView):
@@ -140,3 +141,10 @@ def registrar_horas(request):
 @login_required
 def painel(request):
     return render(request, 'inicio.html')
+
+def landing(request):
+    return render(request, 'core/landing.html')
+
+
+class CustomLoginView(LoginView):
+    template_name = 'core/login.html'

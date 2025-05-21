@@ -26,5 +26,9 @@ urlpatterns = [
     path('horas/', views.registrar_horas, name='registrar_horas'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('landing.html', views.landing, name='landing'),
+    path('novo/', views.criar_registro, name='criar_registro'),
+    path('lista/', views.lista_registros, name='lista_registros'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
 
 ]

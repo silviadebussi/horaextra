@@ -1,0 +1,38 @@
+<!-- templates/core/landing.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle de Horas - Início</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark p-2">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'landing' %}">Controle de Horas</a>
+            <a class="btn btn-outline-light" href="{% url 'login' %}">Login</a>
+        </div>
+    </nav>
+
+    <div class="hero bg-white shadow-sm rounded p-5">
+        <div>
+            <h1 class="display-5 mb-4">Bem-vindo ao Sistema de Controle de Horas</h1>
+            <p class="lead mb-4">Registre e acompanhe suas horas extras de forma simples e eficaz.</p>
+            <a href="{% url 'criar_registro' %}" class="btn btn-primary btn-lg">➕ Registrar Hora Extra</a>
+        </div>
+    </div>
+</body>
+</html>
