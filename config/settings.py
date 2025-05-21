@@ -127,4 +127,4 @@ LOGIN_URL = '/admin/login/'
 
 LOGIN_REDIRECT_URL = '/lista/'
  # ou qualquer rota que só o usuário logado pode acessar
-LOGOUT_REDIRECT_URL = '/landing/'
+LOGOUT_REDIRECT_URL = 'landing'

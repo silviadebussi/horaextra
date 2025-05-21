@@ -1,20 +1,20 @@
 from django import forms
-from .models import RegistroHora
+from .models import RegistroHora, Atividade
 from django import forms
 from .models import RegistroHora, Regional, AtividadeHoraExtra
 from django import forms
 from .models import RegistroHora
 
 class RegistroHoraForm(forms.ModelForm):
-    atividades = forms.ModelChoiceField(
-        queryset=AtividadeHoraExtra.objects.all(),
-        empty_label="Selecione uma atividade",
-        widget=forms.Select(attrs={'class': 'form-select'})
+    atividade = forms.ModelChoiceField(
+        queryset=AtividadeHoraExtra.objects.filter(ocupada=False),
+        label="Atividade",
+        required=True
     )
 
     class Meta:
         model = RegistroHora
-        fields = ['regional', 'data', 'hora_inicio', 'hora_fim', 'atividades']
+        fields = ['regional', 'data', 'hora_inicio', 'hora_fim', 'atividade']
         widgets = {
             'regional': forms.Select(attrs={'class': 'form-select'}),
             'data': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),

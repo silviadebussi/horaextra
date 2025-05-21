@@ -37,12 +37,18 @@ def criar_registro(request):
         form = RegistroHoraForm(request.POST)
         if form.is_valid():
             registro = form.save(commit=False)
-            registro.usuario = request.user
+            registro.funcionario = request.user
             registro.save()
+
+            atividade = form.cleaned_data['atividade']
+            atividade.ocupada = True
+            atividade.funcionario = request.user
+            atividade.save()
+
             return redirect('lista_registros')
     else:
         form = RegistroHoraForm()
-    return render(request, 'core/criar_registro.html', {'form': form})
+    return render(request, 'core/registro_form.html', {'form': form})
 
 @login_required
 def atividades_disponiveis(request):
@@ -120,6 +126,8 @@ def excluir_atividade(request, pk):
     return render(request, 'core/atividades/confirmar_exclusao.html', {'atividade': atividade})
 
 
+from .models import AtividadeHoraExtra
+
 @login_required
 def registrar_horas(request):
     perfil = Perfil.objects.get(usuario=request.user)
@@ -134,7 +142,8 @@ def registrar_horas(request):
             return redirect('registrar_horas')
     else:
         form = RegistroHoraForm()
-        form.fields['atividade'].queryset = Atividade.objects.filter(disponivel=True)
+        # Ajuste aqui para usar AtividadeHoraExtra e filtrar pelas atividades não ocupadas
+        form.fields['atividade'].queryset = AtividadeHoraExtra.objects.filter(ocupada=False)
     return render(request, 'horas/form.html', {'form': form})
 
 
