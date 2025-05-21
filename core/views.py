@@ -73,7 +73,7 @@ def assumir_atividade(request, atividade_id):
 def gestor_required(view_func):
     def wrapper(request, *args, **kwargs):
         if not hasattr(request.user, 'perfil') or request.user.perfil.tipo != 'gestor':
-            return HttpResponseForbidden("Apenas gestores têm acesso.")
+            return render(request, 'errodepermissao.html', status=403)
         return view_func(request, *args, **kwargs)
     return wrapper
 

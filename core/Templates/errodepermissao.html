@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="alert alert-danger mt-5 text-center">
+    <h3>❌ Acesso Negado</h3>
+    <p>Esta funcionalidade está disponível apenas para <strong>gestores</strong>.</p>
+    <a href="{% url 'lista_registros' %}" class="btn btn-primary mt-3">Voltar</a>
+</div>
+{% endblock %}
