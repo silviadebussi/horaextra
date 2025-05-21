@@ -125,6 +125,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/admin/login/'
 
 
-LOGIN_REDIRECT_URL = '/atividades/'
+LOGIN_REDIRECT_URL = '/lista/'
  # ou qualquer rota que só o usuário logado pode acessar
-LOGOUT_REDIRECT_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/landing/'

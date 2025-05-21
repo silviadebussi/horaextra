@@ -10,8 +10,15 @@
         <div class="container">
             <a class="navbar-brand" href="{% url 'lista_registros' %}">Controle de Horas</a>
             <a class="btn btn-light" href="{% url 'criar_registro' %}">+ Novo Registro</a>
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'landing' %}">Landing page</a>
+            <a class="btn btn-light" href="{% url 'listar_atividades' %}">+ criar atividades</a>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-light" type="submit">Logout</button>
+                </form>
+            {% else %}
+                <a class="btn btn-outline-light" href="{% url 'login' %}">Login</a>
+            {% endif %}
         </div>
     </nav>
 
