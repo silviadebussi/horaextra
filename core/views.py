@@ -168,7 +168,6 @@ class CustomLoginView(LoginView):
     template_name = 'core/login.html'
 
 def consultar_horas(request):
-    # Aqui filtramos só os registros do usuário logado
     registros = RegistroHora.objects.filter(funcionario=request.user)
 
     for r in registros:

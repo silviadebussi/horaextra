@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from core import views
-from core.views import IndexView  # se usar classe-based view
+from core.views import IndexView
 
 urlpatterns = [
     # Landing page como página inicial
