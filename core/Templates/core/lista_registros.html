@@ -1,6 +1,7 @@
 {% extends 'core/inicio.html' %}
 
 {% block content %}
+{% if user.is_staff %}
 <h2>Registros horas extras</h2>
 <table class="table table-bordered table-striped">
     <thead>
@@ -28,4 +29,7 @@
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<p>Você não tem permissão para visualizar essa página.</p>
+{% endif %}
 {% endblock %}

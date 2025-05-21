@@ -1,3 +1,4 @@
+from django.utils.datetime_safe import datetime
 from django.views.generic import TemplateView
 from .models import Cliente, User, Regional, RegistroHora, AtividadeHoraExtra, Perfil, Atividade
 from django.shortcuts import redirect
@@ -30,6 +31,15 @@ def dashboard(request):
 def lista_registros(request):
     registros = RegistroHora.objects.all()
     return render(request, 'core/lista_registros.html', {'registros': registros})
+
+@login_required
+def listar_horas_extras(request):
+    if not request.user.is_staff:  # ou .is_gestor se tiver campo customizado
+        return HttpResponseForbidden("Você não tem permissão para acessar esta página.")
+
+    registros = RegistroHora.objects.filter(horas_extras=True)  # exemplo filtro
+
+    return render(request, 'core/registro_gestor.html', {'registros': registros})
 
 @login_required
 def criar_registro(request):
@@ -142,7 +152,6 @@ def registrar_horas(request):
             return redirect('registrar_horas')
     else:
         form = RegistroHoraForm()
-        # Ajuste aqui para usar AtividadeHoraExtra e filtrar pelas atividades não ocupadas
         form.fields['atividade'].queryset = AtividadeHoraExtra.objects.filter(ocupada=False)
     return render(request, 'horas/form.html', {'form': form})
 
@@ -157,3 +166,18 @@ def landing(request):
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
+
+def consultar_horas(request):
+    # Aqui filtramos só os registros do usuário logado
+    registros = RegistroHora.objects.filter(funcionario=request.user)
+
+    for r in registros:
+        if r.hora_inicio and r.hora_fim:
+            inicio = datetime.combine(datetime.today(), r.hora_inicio)
+            fim = datetime.combine(datetime.today(), r.hora_fim)
+            duracao = fim - inicio
+            r.total_horas = duracao
+        else:
+            r.total_horas = None
+
+    return render(request, 'core/registro_consulta.html', {'registros': registros})

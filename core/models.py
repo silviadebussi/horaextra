@@ -18,6 +18,7 @@ class Regional(models.Model):
         return self.nome
 
 class RegistroHora(models.Model):
+    funcionario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     regional = models.ForeignKey(Regional, on_delete=models.CASCADE)
     data = models.DateField()
     hora_inicio = models.TimeField()

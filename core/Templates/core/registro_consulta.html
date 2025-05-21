@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Horas Registradas</h2>
+
+{% if registros %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Hora Início</th>
+                <th>Hora Fim</th>
+                <th>Regional</th>
+                <th>Atividade</th>
+                <th>Total de Horas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registro in registros %}
+            <tr>
+                <td>{{ registro.data|date:"d/m/Y" }}</td>
+                <td>{{ registro.hora_inicio }}</td>
+                <td>{{ registro.hora_fim }}</td>
+                <td>{{ registro.regional.nome }}</td>
+                <td>{{ registro.atividade.descricao }}</td>
+                <td>
+                    {% if registro.total_horas %}
+                        {{ registro.total_horas }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Você ainda não registrou nenhuma hora.</p>
+{% endif %}
+{% endblock %}
